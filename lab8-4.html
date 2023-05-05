@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 4</title>
+</head>
+<body>
+    <style>
+        table, .add {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid royalblue;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        #modal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+    <button onclick="showModal()">Открыть модальное окно</button>
+    <table id="table">
+        <tr>
+            <th>RAM</th>
+            <th>Sup Platforms</th>
+            <th>Sensors</th>
+        </tr>
+    </table>
+
+    <div id="modal">
+        <div class="modal-content">
+            <form id="form">
+                <label>RAM:</label><br>
+                <input type="number" name="ram" value="4"><br><br>
+
+                <label>OS:</label><br>
+                <select>
+                    <option value="android">Android</option>
+                    <option value="ios">IOS</option>
+                    <option value="linux">Linux</option>
+                </select>
+                <br><br>
+
+                <label>Sensors:</label><br>
+                <input type="number" name="ram" value="4"><br><br>
+            
+                <button type="button" onclick="addDevice()">Добавить устройство</button>
+            </form>
+            <button onclick="hideModal()">Скрыть окно</button>
+        </div>
+    <script>
+        const form = document.forms[0];
+
+        class FitnessBracelet {
+            constructor(ram_size, sup_platforms, sensors) {
+                this.ram_size = ram_size;
+                this.sup_platforms = sup_platforms;
+                this.sensors = sensors;
+            }
+        }
+        const bracelets = [];
+
+        function addDevice () {
+            const ram_size = form.elements[0].value;
+            const sup_platforms = form.elements[1].value;
+            const sensors = form.elements[2].value;
+
+            bracelets.push(new FitnessBracelet(ram_size, sup_platforms, sensors));
+            addRow();
+            form.reset();
+        }
+
+        function addRow() {
+            const table = document.getElementById("table");
+            table.innerHTML = "<tr><th>RAM</th><th>Sup Platforms</th><th>Sensors</th></tr>";
+
+            for (let i = 0; i < bracelets.length; i++) {
+                let bracelet = bracelets[i];
+                let row = table.insertRow(-1);
+                let ram_size = row.insertCell(0);
+                let sup_platforms = row.insertCell(1);
+                let sensors = row.insertCell(2);
+
+                ram_size.innerHTML = bracelet.ram_size;
+                sup_platforms.innerHTML = bracelet.sup_platforms;
+                sensors.innerHTML = bracelet.sensors;
+            }
+        }
+
+        function showModal() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "flex";
+        }
+        function hideModal() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 2</title>
+</head>
+<body>
+    <style>
+        form {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        form > * {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+        }
+        .error {
+            visibility: hidden;
+        }
+        .error.visible {
+            visibility: visible;
+        }
+    </style>
+    <form>
+        <label>
+            <span class="title">Серия паспорта</span>
+            <input type="text">
+            <span class="error">Введите серию паспорта</span>
+        </label>
+        <label>
+            <span class="title">Номер паспорта</span>
+            <input type="text">
+            <span class="error">Введите номер паспорта</span>
+        </label>
+        <label>
+            <span class="title">Номер бланка</span>
+            <input type="text">
+            <span class="error">Введите номер бланка</span>
+        </label>
+        <label>
+            <span class="title">Предмет</span>
+            <select value="">
+                <option value="">Выберите предмет</option>
+                <option value="bl">белорусский</option>
+                <option value="ru">русский</option>
+                <option value="mt">математика</option>
+                <option value="fz">физика</option>
+            </select>
+            <span class="error">Выберите предмет</span>
+        </label>
+        <img src="assets/code.png" alt="">
+        <label>
+            <span class="title">Код на картинке</span>
+            <input type="text">
+            <span class="error">Введите код</span>
+        </label>
+        <button type="button" onclick="validate()">Найти</button>
+    </form>
+
+    <script>
+        const form = document.forms[0];
+        const serPasport = form.elements[0];
+        const numPasport = form.elements[1];
+        const numBlank = form.elements[2];
+        const lesson = form.elements[3];
+        const code = form.elements[4];
+
+        function validate() {
+            if (serPasport.value.length !== 2 || !serPasport.value.match(/[a-zA-Z]{2}/)) {
+                setVisibleError(0);
+            } else {
+                resetVisibleError(0);
+            }
+
+            if (numPasport.value.length !== 7 || isNaN(numPasport.value)) {
+                setVisibleError(1);
+            } else {
+                resetVisibleError(1);
+            }
+
+            if (numBlank.value.length !== 7 || isNaN(numBlank.value)) {
+                setVisibleError(2);
+            } else {
+                resetVisibleError(2);
+            }
+
+            if (!lesson.value) {
+                setVisibleError(3);
+            } else {
+                resetVisibleError(3);
+            }
+
+            if (code.value.length !== 6 || isNaN(code.value)) {
+                setVisibleError(4);
+            } else {
+                resetVisibleError(4);
+            }
+        }
+
+        function setVisibleError (id) {
+            form.elements[id].parentElement.getElementsByClassName("error")[0].classList.add("visible")
+        }
+        function resetVisibleError (id) {
+            form.elements[id].parentElement.getElementsByClassName("error")[0].classList.remove("visible")
+        }
+    </script>
+</body>
+</html>

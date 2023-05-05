@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Задание 1</title>
+</head>
+<body>
+    <style>
+        form {
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        form > * {
+            display: block;
+            margin-bottom: 10px;
+        }
+        #modal {
+            /* display: flex; */
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+    <form>
+        <textarea name="" id="textarea"></textarea>
+        <label>
+            <span>Введите число a:</span>
+            <input type="number">
+        </label>
+        <label>
+            <span>Введите число b:</span>
+            <input type="number">
+        </label>
+        <label>
+            <span>Введите число c:</span>
+            <input type="number">
+        </label>
+        <label>
+            <span>Результат выполнения программы:</span>
+            <input type="number" id="result" disabled>
+        </label>
+        <button id="calc" type="submit">Вычислить</button>
+    </form>
+    <div id="modal">
+        <div class="modal-content">
+            Введите значения
+            <button onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+    <script>
+        const modal = document.getElementById("modal");
+        const result = document.getElementById("result");
+        const btn = document.getElementById("calc");
+        const form = document.forms[0];
+
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            let sum = 0;
+            let isBreak = false;
+
+            for (let i = 0; i < form.elements.length; i++) {
+                const item = form.elements[i];
+                if (item.tagName.toLowerCase() !== "input" || item.id !== "") {
+                    continue
+                }
+
+                if (!item.value) {
+                    openModal();
+                    isBreak = true;
+                    break;
+                }
+
+                sum += +item.value;
+            }
+
+            if (!isBreak) {
+                result.value = sum;
+            }
+        })
+
+        function openModal () {
+            modal.style.display = "flex";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>
